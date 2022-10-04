@@ -20,9 +20,14 @@ const middlewareController = {
                         type : 'info',
                     });
                 }
-                console.log(user);
-                req.user = user;
-                next();
+                User.find({
+                    _id : user.id
+                })
+                .then((data) => {
+                    // console.log('data : ',data);
+                    req.user = data;
+                    next();
+                })
             });
     },
     checkIsAdmin : (req,res,next) => {
