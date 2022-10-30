@@ -1,14 +1,15 @@
-const siteRoute = require('./site');
-const productRoute = require('./product');
-const authRoute = require('./auth');
-const adminRoute = require('./admin');
+const siteRoute = require("./site");
+const productRoute = require("./product");
+const authRoute = require("./auth");
+const adminRoute = require("./admin");
+const meRoute = require("./me");
 
-
-function Routes(app){
-    app.use('/products',productRoute);
-    app.use('/auth', authRoute);
-    app.use('/admin',adminRoute);
-    app.use('/',siteRoute);
+function Routes(app) {
+  app.use("/products", productRoute);
+  app.use("/auth", authRoute);
+  app.use("/admin", adminRoute);
+  app.use("/me", meRoute);
+  app.use("/", siteRoute);
 }
 
 module.exports = Routes;
