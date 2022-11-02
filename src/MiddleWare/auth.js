@@ -23,7 +23,7 @@ const middlewareController = {
       User.find({
         _id: user.id,
       }).then((data) => {
-        console.log("data : ", data);
+        // console.log("data : ", data);
         req.user = data;
         next();
       });
