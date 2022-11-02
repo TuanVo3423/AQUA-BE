@@ -11,6 +11,7 @@ class SiteController {
           email: req.user[0].email,
           username: req.user[0].fullname,
           id: req.user[0].id,
+          historycheckout: req.user[0].historycheckout,
         });
       })
       .catch(next);

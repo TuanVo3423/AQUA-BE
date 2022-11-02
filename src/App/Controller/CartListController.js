@@ -27,12 +27,29 @@ class CartListController {
   }
   // [PUT] me/updatecartlist
   updateCartList(req, res, next) {
-    console.log(req.body);
+    console.log("bat dau tu day : ", req.body);
     UserShema.updateOne(
       { _id: req.body.userID },
       {
         $set: {
           cartlist: req.body.cartlist,
+        },
+      }
+    )
+      .then((user) => {
+        res.status(200);
+      })
+      .catch(next);
+  }
+
+  // [PUT] me/updatehisotry
+  updateHistoryCheckout(req, res, next) {
+    // console.log("checkout : ", req.body);
+    UserShema.updateOne(
+      { _id: req.body.userID },
+      {
+        $set: {
+          historycheckout: req.body.history,
         },
       }
     )
