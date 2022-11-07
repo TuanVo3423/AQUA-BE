@@ -24,15 +24,15 @@ const middlewareController = {
         _id: user.id,
       }).then((data) => {
         // console.log("data : ", data);
-        req.user = data;
+        req.user = data[0];
         next();
       });
     });
   },
   checkIsAdmin: (req, res, next) => {
-    if (req.user.id) {
-      const id = mongoose.Types.ObjectId(req.user.id);
-      // console.log('id : ',id);
+    // console.log("id : ", req.user._id);
+    if (req.user._id) {
+      const id = mongoose.Types.ObjectId(req.user._id);
       User.findOne({
         _id: id,
       })
