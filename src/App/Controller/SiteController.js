@@ -7,11 +7,12 @@ class SiteController {
       .then((products) => {
         res.status(200).json({
           products,
-          cartlist: req.user[0].cartlist,
-          email: req.user[0].email,
-          username: req.user[0].fullname,
-          id: req.user[0].id,
-          historycheckout: req.user[0].historycheckout,
+          isadmin: req.user.isAdmin,
+          cartlist: req.user.cartlist,
+          email: req.user.email,
+          username: req.user.fullname,
+          id: req.user._id,
+          historycheckout: req.user.historycheckout,
         });
       })
       .catch(next);
