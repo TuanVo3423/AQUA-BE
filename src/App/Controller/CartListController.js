@@ -27,7 +27,7 @@ class CartListController {
   }
   // [PUT] me/updatecartlist
   updateCartList(req, res, next) {
-    console.log("bat dau tu day : ", req.body);
+    // console.log("bat dau tu day : ", req.body);
     UserShema.updateOne(
       { _id: req.body.userID },
       {
