@@ -1,5 +1,7 @@
 const UserShema = require("../Model/UserModel");
 
+const nodemailer = require("nodemailer");
+
 class CartListController {
   // [PUT] me/addcart/id
   addCartList(req, res, next) {
@@ -57,6 +59,54 @@ class CartListController {
         res.status(200);
       })
       .catch(next);
+  }
+
+  // [POST] me/email
+  sendEmailToClient(req, res, next) {
+    const transporter = nodemailer.createTransport({
+      service: "hotmail",
+      auth: {
+        user: "aqua_vku_21GIT@outlook.com",
+        pass: "tuandzvc123",
+      },
+    });
+    const options = {
+      from: "aqua_vku_21GIT@outlook.com",
+      to: req.body.email,
+      subject: "Confirm your order on aqua_vku_21GIT website",
+      text: `Hi ${req.body.name}! We’re happy to let you know that we’ve received your order.Once your package ships, we will send you an email with a tracking number and link so you can see the movement of your package.If you have any questions, contact us here aqua_vku_21GIT@outlook.com`,
+    };
+    transporter.sendMail(options, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("send mail : ", info.response);
+      }
+    });
+  }
+  // [POST] me/emailToAdmin
+  sendEmailToAdmin(req, res, next) {
+    console.log(req.body);
+    const transporterMail = nodemailer.createTransport({
+      service: "hotmail",
+      auth: {
+        user: req.body.email,
+        pass: req.body.pass,
+      },
+    });
+    const options = {
+      from: req.body.email,
+      to: "aqua_vku_21GIT@outlook.com",
+      subject: `Question from a customer named ${req.body.name} who is lived in ${req.body.country}`,
+      text: req.body.message,
+    };
+    transporterMail.sendMail(options, (err, info) => {
+      if (err) {
+        return res.status(400).json(err);
+      } else {
+        return res.status(200).json(info);
+      }
+    });
   }
 }
 

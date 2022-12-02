@@ -19,14 +19,16 @@ const middlewareController = {
           message: "Your session has expired, please login again!",
           type: "info",
         });
+      } else {
+        // console.log("user", user);
+        User.find({
+          _id: user.id,
+        }).then((data) => {
+          // console.log("data : ", data);
+          req.user = data[0];
+          next();
+        });
       }
-      User.find({
-        _id: user.id,
-      }).then((data) => {
-        // console.log("data : ", data);
-        req.user = data[0];
-        next();
-      });
     });
   },
   checkIsAdmin: (req, res, next) => {
