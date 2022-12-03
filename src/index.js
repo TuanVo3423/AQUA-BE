@@ -28,8 +28,8 @@ const io = new Server(server, {
       "https://aqua-fe.vercel.app",
       "https://aqua-admin-ochre.vercel.app",
     ],
-    methods: ["GET", "POST"],
     // origin: ["http://127.0.0.1:5173", "http://127.0.0.1:5174"],
+    methods: ["GET", "POST"],
   },
 });
 
