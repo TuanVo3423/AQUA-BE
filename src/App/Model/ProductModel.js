@@ -11,6 +11,7 @@ const product = new Schema(
     attachment: { type: String },
     likeCount: { type: Number, default: 0 },
     isNew: { type: Boolean, default: false },
+    createdAt: { type: Date, default: new Date() },
   },
   {
     timestamps: true,

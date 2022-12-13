@@ -4,7 +4,7 @@ class PostController {
   // [POST] products/createPost
   createPost(req, res, next) {
     const newPost = new Post(req.body);
-    // console.log('newPost : ',newPost);
+    console.log("newPost : ", req.body.createdAt);
     newPost
       .save()
       .then((post) => {
