@@ -1,7 +1,7 @@
-const express = require('express');
-const AdminProductCtroller = require('../App/Controller/AdminProductCtroller');
+const express = require("express");
+const AdminProductController = require("../App/Controller/AdminProductCtroller");
 const router = express.Router();
 
-router.get('/',AdminProductCtroller.index);
+router.get("/", AdminProductController.index);
 
 module.exports = router;
