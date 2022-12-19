@@ -1,5 +1,5 @@
 const express = require("express");
-const AdminProductController = require("../App/Controller/AdminProductCtroller");
+const AdminProductController = require("../App/Controller/AdminProductController");
 const router = express.Router();
 
 router.get("/", AdminProductController.index);
