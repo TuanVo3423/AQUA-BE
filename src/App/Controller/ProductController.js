@@ -1,38 +1,38 @@
-const Post = require("../Model/ProductModel");
+const ProductModel = require("../Model/ProductModel");
 const PAGE_SIZE = 6;
-class PostController {
-  // [POST] products/createPost
-  createPost(req, res, next) {
-    const newPost = new Post(req.body);
-    console.log("newPost : ", req.body.createdAt);
-    newPost
+class ProductController {
+  // [POST] products/createProduct
+  createProduct(req, res, next) {
+    const newProduct = new ProductModel(req.body);
+    // console.log("newPost : ", req.body.createdAt);
+    newProduct
       .save()
-      .then((post) => {
-        res.status(200).json(post);
+      .then((product) => {
+        res.status(200).json(product);
       })
       .catch(next);
   }
   // [POST] /products/:id/edit
-  editPost(req, res, next) {
-    Post.findOne(req.params.id)
-      .then((post) => {
-        res.json({ post: post });
+  editProduct(req, res, next) {
+    ProductModel.findOne(req.params.id)
+      .then((product) => {
+        res.json({ post: product });
       })
       .catch(next);
   }
   // [PUT] /products/:id
-  updatePost(req, res, next) {
+  updateProduct(req, res, next) {
     // console.log('req.body : ',req.body);
-    Post.updateOne({ _id: req.body.id }, req.body)
+    ProductModel.updateOne({ _id: req.body.id }, req.body)
       .then(() => {
         res.status(200).json(req.body);
       })
       .catch(next);
   }
   // [DELETE] /products/:id
-  deletePost(req, res, next) {
-    Post.deleteOne({ _id: req.params.id })
-      .then((post) => {
+  deleteProduct(req, res, next) {
+    ProductModel.deleteOne({ _id: req.params.id })
+      .then((product) => {
         res.status(200).json(req.params.id);
       })
       .catch(next);
@@ -45,7 +45,7 @@ class PostController {
       page = parseInt(page);
       var skip = (page - 1) * PAGE_SIZE;
 
-      Post.find({})
+      ProductModel.find({})
         .skip(skip)
         .limit(PAGE_SIZE)
         .then((data) => {
@@ -58,11 +58,11 @@ class PostController {
   // [GET] products/shop/filter
   filterProductShop(req, res, next) {
     const field = req.query.category;
-    Post.find({ category: field })
+    ProductModel.find({ category: field })
       .then((data) => {
         res.status(200).json(data);
       })
       .catch(next);
   }
 }
-module.exports = new PostController();
+module.exports = new ProductController();
