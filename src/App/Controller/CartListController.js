@@ -1,31 +1,61 @@
 const UserShema = require("../Model/UserModel");
 
 const nodemailer = require("nodemailer");
+const mongoose = require("mongoose");
 
 class CartListController {
+  // [GET] me/cart
+  getAllCartList(req, res, next) {
+    // console.log(req.query.id);
+    const id = mongoose.Types.ObjectId(req.query.id);
+    UserShema.findOne({ _id: id }).then((data) => {
+      res.status(200).json(data);
+    });
+  }
   // [PUT] me/addcart/id
   addCartList(req, res, next) {
-    UserShema.updateOne(
-      { _id: req.body.userID },
-      {
-        $push: {
-          cartlist: {
-            id: req.body._id,
-            name: req.body.name,
-            price: req.body.price,
-            attachment: req.body.img,
-            quantity: 1,
-          },
+    console.log(req.isMultiple);
+    // console.log(req.body);
+    if (req.isMultiple) {
+      UserShema.updateOne(
+        {
+          _id: req.body.userID,
+          cartlist: { $elemMatch: { id: { $eq: req.body._id } } },
         },
-      }
-    )
-      .then(() => {
-        res.status(200).json({
-          message: "Add product to cartlist successfully",
-          type: "success",
-        });
-      })
-      .catch(next);
+        {
+          $inc: { "cartlist.$.quantity": 1 },
+        }
+      )
+        .then(() => {
+          res.status(200).json({
+            message: "Add product to cartlist successfully",
+            type: "success",
+          });
+        })
+        .catch(next);
+    } else {
+      UserShema.updateOne(
+        { _id: req.body.userID },
+        {
+          $push: {
+            cartlist: {
+              id: req.body._id,
+              name: req.body.name,
+              price: req.body.price,
+              attachment: req.body.img,
+              quantity: 1,
+            },
+          },
+        }
+      )
+        .then(() => {
+          res.status(200).json({
+            message: "Add product to cartlist successfully",
+            type: "success",
+          });
+        })
+        .catch(next);
+    }
   }
   // [PUT] me/updatecartlist
   updateCartList(req, res, next) {
